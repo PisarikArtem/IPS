@@ -4,6 +4,11 @@ from tkinter import messagebox
 import pymysql
 from config import host,password,user,db_name
 
+import customtkinter
+customtkinter.set_appearance_mode("dark")
+customtkinter.set_default_color_theme("blue")
+
+
 class AddCarWindow:
 
 
@@ -50,7 +55,7 @@ class AddCarWindow:
 
 
     def __init__(self,parent,connector):
-        self.addcarwindow = Toplevel(parent)
+        self.addcarwindow = customtkinter.CTkToplevel(parent)
         self.connectoinlocal = connector
         self.addcarwindow.title('Добавление машины')
         # размер окна
@@ -58,36 +63,36 @@ class AddCarWindow:
 
         self.addcarwindow.resizable(False, False)
         self.font_header = ('Arial', 15)
-        self.font_entry = ('Arial', 12)
-        self.label_font = ('Arial', 11)
+        self.font_entry = ('Arial', 13)
+        self.label_font = ('Arial', 15)
         self.base_padding = {'padx': 10, 'pady': 8}
         self.header_padding = {'padx': 10, 'pady': 12}
 
-        self.manufacterer_label = Label(self.addcarwindow, text="Производитель: ", font=self.label_font)
+        self.manufacterer_label = customtkinter.CTkLabel(self.addcarwindow, text="Производитель: ", font=self.label_font)
         self.manufacterer_label.place(x=2, y=2)
 
-        self.manufacterer_entry = Entry(self.addcarwindow, bg='#fff', fg='#444', font=self.font_entry)
+        self.manufacterer_entry = customtkinter.CTkEntry(self.addcarwindow, font=self.font_entry)
         self.manufacterer_entry.place(x=122, y=2)
 
-        self.model_label = Label(self.addcarwindow, text="Модель: ", font=self.label_font)
+        self.model_label = customtkinter.CTkLabel(self.addcarwindow, text="Модель: ", font=self.label_font)
         self.model_label.place(x=2, y=32)
 
-        self.model_entry = Entry(self.addcarwindow, bg='#fff', fg='#444', font=self.font_entry)
+        self.model_entry = customtkinter.CTkEntry(self.addcarwindow, font=self.font_entry)
         self.model_entry.place(x=122, y=32)
 
-        self.price_label = Label(self.addcarwindow, text="Цена: ", font=self.label_font)
+        self.price_label = customtkinter.CTkLabel(self.addcarwindow, text="Цена: ", font=self.label_font)
         self.price_label.place(x=2, y=62)
 
-        self.price_entry = Entry(self.addcarwindow, bg='#fff', fg='#444', font=self.font_entry)
+        self.price_entry = customtkinter.CTkEntry(self.addcarwindow, font=self.font_entry)
         self.price_entry.place(x=122, y=62)
 
-        self.year_label = Label(self.addcarwindow, text="Год:", font=self.label_font)
+        self.year_label = customtkinter.CTkLabel(self.addcarwindow, text="Год:", font=self.label_font)
         self.year_label.place(x=2, y=92)
 
-        self.year_entry = Entry(self.addcarwindow, bg='#fff', fg='#444', font=self.font_entry)
+        self.year_entry = customtkinter.CTkEntry(self.addcarwindow, font=self.font_entry)
         self.year_entry.place(x=122, y=92)
 
-        self.add_btn = Button(self.addcarwindow, text="Добавить машину", command=self.add_car_to_bd)
+        self.add_btn = customtkinter.CTkButton(self.addcarwindow, text="Добавить машину", command=self.add_car_to_bd)
         self.add_btn.place(x=5,y=132,width=300)
 
         self.addcarwindow.bind('<Return>', self.add_car_to_bd)

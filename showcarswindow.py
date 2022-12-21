@@ -3,6 +3,10 @@ from tkinter import ttk
 from tkinter import messagebox
 import pymysql
 from config import host,password,user,db_name
+import customtkinter
+customtkinter.set_appearance_mode("dark")
+customtkinter.set_default_color_theme("blue")
+
 
 class ShowCarWindow:
     def treeview_sort_column(self,col, reverse):
@@ -53,7 +57,7 @@ class ShowCarWindow:
 
 
     def __init__(self,parent,connector, username):
-        self.showcarwindow = Toplevel(parent)
+        self.showcarwindow = customtkinter.CTkToplevel(parent)
         self.connectoinlocal = connector
         self.username = username
         self.showcarwindow.title('Ваши автомобили')

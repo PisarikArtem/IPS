@@ -10,7 +10,9 @@ from tkinter import messagebox
 from config import host,password,user,db_name
 from PIL import Image, ImageTk
 import pymysql
-
+import customtkinter
+customtkinter.set_appearance_mode("dark")
+customtkinter.set_default_color_theme("blue")
 
 class ServiceWindow:
     def create_new_cars(self):
@@ -178,11 +180,11 @@ class ServiceWindow:
                 for row in self.result:
                     for i in row.keys():
                         self.usermoney = row[i]
-            self.main_label = Label(self.servicewindow, text=f'Баланс: {self.usermoney}$', font=('Arial', 10),
+            self.main_label = customtkinter.CTkLabel(self.servicewindow, text=f'Баланс: {self.usermoney}$', font=('Arial', 13),
                                         justify=CENTER)
             self.main_label.place(x=2, y=22)
         except Exception as ex:
-            return messagebox.showinfo("Ошибка","Ошибка получения денежных средств пользователя")
+            return messagebox.showinfo("Ошибка","Ошибка получения денежных средств пользователя!")
 
     def sell_a_car(self):
         self.total_price = 0
@@ -206,7 +208,7 @@ class ServiceWindow:
                         self.cursor.execute(self.change)
                         self.connectoinlocal.commit()
                 except:
-                    return messagebox.showinfo('Ошибка!', 'Ошибка удаления машин из БД')
+                    return messagebox.showinfo('Ошибка!', 'Ошибка удаления машин из БД!')
         self.refresh()
 
     def showcars(self):
@@ -225,12 +227,12 @@ class ServiceWindow:
                 with self.connectoinlocal.cursor() as self.cursor:
                     self.cursor.execute(self.AI)
                     self.connectoinlocal.commit()
-            return messagebox.showinfo("Ошибка",f"У пользователя {self.username} нет машин")
+            return messagebox.showinfo("Ошибка",f"У пользователя {self.username} нет машин!")
 
 
     def __init__(self,username, parent,connector):
         # главное окно приложения
-        self.servicewindow = Toplevel(parent)
+        self.servicewindow = customtkinter.CTkToplevel(parent)
         self.connectoinlocal = connector
         self.username = username
         # заголовок окна
@@ -247,83 +249,75 @@ class ServiceWindow:
         self.servicewindow.resizable(False, False)
         self.font_header = ('Arial', 15)
         self.font_entry = ('Arial', 12)
-        self.label_font = ('Arial', 11)
+        self.label_font = ('Arial', 14)
         self.base_padding = {'padx': 10, 'pady': 8}
         self.header_padding = {'padx': 10, 'pady': 12}
 
-        self.main_label = Label(self.servicewindow, text=f'Пользователь: {username}', font=('Arial',10), justify=CENTER)
+        self.main_label = customtkinter.CTkLabel(self.servicewindow, text=f'Пользователь: {username}', font=('Arial',15), justify=CENTER)
         # помещаем виджет в окно по принципу один виджет под другим
         self.main_label.place(x=2,y=2)
-        self.label = Label(self.servicewindow, text='Автомобили', font=('Arial', 15), justify=CENTER)
+        self.label = customtkinter.CTkLabel(self.servicewindow, text='Автомобили', font=('Arial', 30), justify=CENTER)
         # помещаем виджет в окно по принципу один виджет под другим
         self.label.pack(pady=20)
 
         self.get_user_money()
 
-        # self.serialized = json.dumps(usermoney)  # преобразованние в строку
-        # self.usermoney_str = ' '.join(re.findall(r': ([^: }]+)}', self.serialized))
-        # print(self.usermoney_str)
 
 
 
-        self.img1 = Image.open('w.png')
-        self.img_photo1 = ImageTk.PhotoImage(self.img1)
-        self.back_btn = Button(self.servicewindow, image = self.img_photo1, command=self.back_to_reg)
-        self.back_btn.place(x=2,y=42)
+        self.img_photo1 = PhotoImage(file="w.png")
+        self.back_btn = Button(self.servicewindow, image=self.img_photo1, command=self.back_to_reg)
+        self.back_btn.place(x=2,y=52)
 
-        self.img2 = Image.open('refpic.png')
-        self.img_photo2 = ImageTk.PhotoImage(self.img2)
+        self.img_photo2 = PhotoImage(file="refpic.png")
         self.ref_btn = Button(self.servicewindow, image=self.img_photo2, command=self.refresh)
-        self.ref_btn.place(x=446, y=42)
+        self.ref_btn.place(x=446, y=48)
 
 
 
-        self.manufacterer_label = Label(self.servicewindow, text="Производитель: ", font=self.label_font)
+        self.manufacterer_label = customtkinter.CTkLabel(self.servicewindow, text="Производитель: ", font=self.label_font)
         self.manufacterer_label.place(x=2, y=350)
 
-        self.manufacterer_entry = Entry(self.servicewindow, bg='#fff', fg='#444', font=self.font_entry)
-        self.manufacterer_entry.place(x=122,y=350)
+        self.manufacterer_entry = customtkinter.CTkEntry(self.servicewindow, font=self.font_entry)
+        self.manufacterer_entry.place(x=112,y=350)
 
-        self.model_label = Label(self.servicewindow, text="Модель: ", font=self.label_font)
+        self.model_label = customtkinter.CTkLabel(self.servicewindow, text="Модель: ", font=self.label_font)
         self.model_label.place(x=2, y=380)
 
-        self.model_entry = Entry(self.servicewindow, bg='#fff', fg='#444', font=self.font_entry)
-        self.model_entry.place(x=122, y=380)
+        self.model_entry = customtkinter.CTkEntry(self.servicewindow, font=self.font_entry)
+        self.model_entry.place(x=112, y=380)
 
-        self.price_label = Label(self.servicewindow, text="Цена: ", font=self.label_font)
+        self.price_label = customtkinter.CTkLabel(self.servicewindow, text="Цена: ", font=self.label_font)
         self.price_label.place(x=2, y=410)
 
-        self.price_entry = Entry(self.servicewindow, bg='#fff', fg='#444', font=self.font_entry)
-        self.price_entry.place(x=122, y=410)
+        self.price_entry = customtkinter.CTkEntry(self.servicewindow, font=self.font_entry)
+        self.price_entry.place(x=112, y=410)
 
-        self.year_label = Label(self.servicewindow, text="Год:", font=self.label_font)
+        self.year_label = customtkinter.CTkLabel(self.servicewindow, text="Год:", font=self.label_font)
         self.year_label.place(x=2, y=440)
 
-        self.year_entry = Entry(self.servicewindow, bg='#fff', fg='#444', font=self.font_entry)
-        self.year_entry.place(x=122, y=440)
+        self.year_entry = customtkinter.CTkEntry(self.servicewindow, font=self.font_entry)
+        self.year_entry.place(x=112, y=440)
 
-        self.img3 = Image.open('s.png')
-        self.img_photo3 = ImageTk.PhotoImage(self.img3)
+        self.img_photo3 = PhotoImage(file="s.png")
         self.search_btn = Button(self.servicewindow, image=self.img_photo3, command=self.search)
-        self.search_btn.place(x=280, y=465)
+        self.search_btn.place(x=225, y=470)
         self.servicewindow.bind('<Return>', self.search)
         self.create_tree()
 
         if (username == "PisarikArtem"):
-            self.img4 = Image.open('plus.png')
-            self.img_photo4 = ImageTk.PhotoImage(self.img4)
+            self.img_photo4 = PhotoImage(file="plus.png")
             self.add_btn = Button(self.servicewindow, image=self.img_photo4, command=self.add_car_by_admin)
-            self.add_btn.place(x=386, y=42)
-            self.img5 = Image.open('minuss.png')
-            self.img_photo5 = ImageTk.PhotoImage(self.img5)
+            self.add_btn.place(x=386, y=48)
+            self.img_photo5 = PhotoImage(file="minuss.png")
             self.add_btn = Button(self.servicewindow, image=self.img_photo5, command=self.del_car_by_admin)
-            self.add_btn.place(x=416, y=42)
+            self.add_btn.place(x=416, y=48)
 
-        self.sell_btn = Button(self.servicewindow, text="Приобрести автомобиль(-и)", command=self.sell_a_car)
-        self.sell_btn.place(x=303, y=300)
+        self.sell_btn = customtkinter.CTkButton(self.servicewindow, text="Приобрести автомобиль(-и)", command=self.sell_a_car)
+        self.sell_btn.place(x=288, y=303)
 
-        self.showcars_btn = Button(self.servicewindow, text="Ваши автомобили", command=self.showcars)
-        self.showcars_btn.place(x=182, y=300)
+        self.showcars_btn = customtkinter.CTkButton(self.servicewindow, text="Ваши автомобили", command=self.showcars)
+        self.showcars_btn.place(x=142, y=303)
 
 
         self.focus()  # вызов фокуса
